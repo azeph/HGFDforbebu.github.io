@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To my Special SomeOne</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/flowers.png" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        .br {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: "Poppins", sans-serif;
+            color: #fff; /* Changed text color to white */
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+            text-shadow: 0 0 10px #000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: animate 5s linear infinite;
+            line-height: 1.5;
+            padding: 0 1rem;
+        }
+        #message {
+            font-size: 50px;
+            margin-top: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #fff; /* Changed border color to white */
+        }
+        #cuteImage {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+        #ribbon {
+            font-size: 90px;
+            cursor: pointer;
+            display: none; /* Hide the ribbon initially */
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+        video#backgroundVideo {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+        @media (max-width: 768px) {
+            .br {
+                font-size: 1.5rem;
+            }
+            #message {
+                font-size: 30px;
+            }
+            #cuteImage, #ribbon {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <video id="backgroundVideo" loop autoplay muted>
+        <source src="manila.mp4" type="video/mp4">
+    </video>
+
+    <audio id="backgroundAudio" loop>
+        <source src="always.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="br">
+        <div class="text-rainbow" id="message"></div>
+        <img id="cuteImage" src="cat.gif" alt="Cute Cat"> <!-- Placeholder for the cat GIF -->
+        <div id="ribbon">🎀</div>
+    </div>
+
+    <script>
+        const message = document.getElementById('message');
+        const cuteImage = document.getElementById('cuteImage');
+        const ribbon = document.getElementById('ribbon');
+        let nextMessageTimeout;
+        let audioIndex = 0;
+
+        const audioSources = [
+            "always.mp3",
+            "giveyouflowers.mp3"
+        ];
+
+        function playNextAudio() {
+            if (audioIndex < audioSources.length) {
+                const audio = document.getElementById("backgroundAudio");
+                audio.src = audioSources[audioIndex];
+                audio.load();
+                audio.play();
+                audioIndex++;
+            }
+        }
+
+        cuteImage.addEventListener('click', function () {
+            playNextAudio();
+        });
+
+        function typeMessage(messageText, speed, callback) {
+            let i = 0;
+            message.textContent = '';
+
+            function type() {
+                if (i < messageText.length) {
+                    message.textContent += messageText.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    callback();
+                }
+            }
+
+            type();
+        }
+
+        function startTypingAnimation() {
+            const messages = ['Click this cat first', 'Happy Girlfriends day, Bebu', 'I love you so much!', 'I always say this but ', 'apaka ganda mo talaga! kakagigil!' , 'you are my inspiration, bebu ', ' Im so proud of you, bebu!', 'Just click the Ribbon here :>', ' .'];
+            let index = 0;
+
+            function typeNextMessage() {
+                if (index < messages.length) {
+                    typeMessage(messages[index], 100, function () {
+                        index++;
+                        if (index < messages.length) {
+                            nextMessageTimeout = setTimeout(typeNextMessage, 3000);
+                        } else {
+                            message.style.display = 'none';
+                            cuteImage.style.display = 'none'; // Hide the cat image
+                            ribbon.style.display = 'block'; // Show the ribbon
+                        }
+                    });
+                }
+            }
+
+            typeNextMessage();
+        }
+
+        ribbon.addEventListener('click', function () {
+            window.location.href = 'flower.html';
+        });
+
+        startTypingAnimation();
+    </script>
+</body>
+</html>

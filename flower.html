@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Love Letter</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .ribbon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            font-size: 50px;
+            text-align: center;
+            color: #ff4081;
+        }
+
+        .gif {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 1s ease;
+            display: none;
+        }
+
+        .gif.show {
+            display: block;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="ribbon" id="ribbon">🎀 Click Me!</div>
+    <img src="flower1.gif" class="gif" id="gif" alt="Surprise GIF">
+    <audio id="audio">
+        <source src="sound.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const ribbon = document.getElementById('ribbon');
+        const gif = document.getElementById('gif');
+        const audio = document.getElementById('audio');
+
+        ribbon.addEventListener('click', function() {
+            audio.play();  // Play the sound
+            gif.classList.add('show');  // Show the GIF with animation
+        });
+    </script>
+</body>
+</html>
